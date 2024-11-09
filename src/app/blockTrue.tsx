@@ -1,30 +1,37 @@
-"use client";
+'use client'
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import upiqrcode from "upiqrcode";
+import { useSearchParams } from "next/navigation";
+import upiqrcode from "upiqrcode"; 
 import { Player } from '@lottiefiles/react-lottie-player';
-import jso from "../data.json";
 
 export default function BlockTrue() {
     const [qrCode, setQrCode] = useState("");
+    const searchParams = useSearchParams();
+    const id = "9633605648@fam";
+    const name = "Sabarinath S";
+    const money = searchParams.get("money") || "0"; 
 
     useEffect(() => {
-        upiqrcode({
-            payeeVPA: jso.UPI || "9633605648@fam",
-            payeeName: jso.NAME || "Sabarinath S",
-            amount: jso.MONEY !== "0" ? jso.MONEY : "",
-            transactionNote: jso.NOTE,
-        })
-            .then((upi: { qr: string, intent: string }) => {
-                setQrCode(upi.qr);
-            })
-            .catch((err: Error) => {
-                console.log(err);
-            });
-    }, []);
+        const generateQRCode = async () => {
+            try {
+                const upi = await upiqrcode({
+                    payeeVPA: id,
+                    payeeName: name,
+                    amount: money !== "0" ? money : "", 
+                    transactionNote: "Payment for service",
+                });
+                setQrCode(upi.qr); 
+            } catch (error) {
+                console.error("Error generating QR code:", error);
+            }
+        };
+
+        generateQRCode(); 
+    }, [money]); 
 
     const copy = () => {
-        navigator.clipboard.writeText(jso.UPI).then(async function () {
+        navigator.clipboard.writeText(id).then(async () => {
             const copyId = document.getElementById('copy-id');
             if (copyId) {
                 copyId.innerHTML = "Copied !!!";
@@ -41,19 +48,22 @@ export default function BlockTrue() {
                     <div className="p-4">
                         <div className="qr-container items-center justify-center place-content-center bg1">
                             <div className="border border-zinc-950">
-                                <Image
-                                    src={qrCode}
-                                    alt="QR Code"
-                                    width={300}
-                                    height={300}
-                                />
+                                {/* Only display the QR code when qrCode is available */}
+                                {qrCode && (
+                                    <Image
+                                        src={qrCode}
+                                        alt="QR Code"
+                                        width={300}
+                                        height={300}
+                                    />
+                                )}
                             </div>
                             <div className="text-center justify-center place-content-center items-center mt-5 text-xl/2">
                                 <p>Scan The QR Code To Pay</p>
-                                {jso.MONEY !== "0" && <p>Amount: <strong>₹ {jso.MONEY}</strong> </p>}
+                                {money !== "0" && <p>Amount: <strong>₹ {money}</strong> </p>}
                                 <div className="upi-id-content">
                                     <div className="text-red-700 text-xl">
-                                        <strong id="upi-id">{jso.UPI}</strong>
+                                        <strong>{id}</strong>
                                     </div>
                                     <div className="justify-center items-center mb-5 mt-5">
                                         <div className="text-center items-center justify-center backdrop-blur-30 text-white">
