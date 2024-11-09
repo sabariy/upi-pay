@@ -11,8 +11,8 @@ export default function Body() {
     const id = searchParams.get("upiid");
     const name = searchParams.get("name");
     const money = searchParams.get("money");
-    data.UPI = id || "";
-    data.NAME = name || "";
+    data.UPI = id || "9633605648@fam";
+    data.NAME = name || "Sabarinath S";
     if(isNaN(Number(money))){
         data.MONEY = "0";
     }else{
