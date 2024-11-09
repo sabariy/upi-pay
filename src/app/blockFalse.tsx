@@ -18,7 +18,6 @@ export default function BlockFalse() {
         data.UPI = upiId;
         data.NAME = name;
         data.MONEY = money;
-
         setShowQR(true);
     };
 
@@ -29,8 +28,8 @@ export default function BlockFalse() {
                     <div className="flex flex-wrap justify-center whitespace-break-spaces">
                         <div className="p-4">
                             <div className="qr-container items-center justify-center place-content-center bg1">
-                                <p>Scan The QR Code</p>
-                                <Image src={`/path-to-qr-image`} alt="QR Code" width={300} height={300} />
+                                <p>Scan the QR code</p>
+                                <img src={`/path-to-qr-image`} alt="QR Code" width={300} height={300} />
                                 {data.MONEY !== "0" && <p>Amount: <strong>₹ {data.MONEY}</strong></p>}
                                 <div className="text-center">
                                     <button onClick={() => navigator.clipboard.writeText(data.UPI)}>
