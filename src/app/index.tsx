@@ -1,6 +1,4 @@
-'use client'
-import { useState, useEffect } from "react";
-import Image from "next/image";
+'use client';
 import { useSearchParams } from "next/navigation";
 import BlockFalse from "./blockFalse";
 import BlockTrue from "./blockTrue";
@@ -26,21 +24,16 @@ export default function Body() {
                 `);
             </script>
             {
-                (data.UPI=="" && data.NAME=="") ? (
+                validMoney === "0" ? (
                     <div>
                         <BlockFalse />
                     </div>
-                ) : (data.UPI!="" && data.NAME !="") ? (
-                    <div>
-                        <BlockTrue />
-                    </div>
                 ) : (
                     <div>
-                        <BlockElse />
+                        <BlockTrue />
                     </div>
                 )
             }
         </>
-
-    )
+    );
 }
