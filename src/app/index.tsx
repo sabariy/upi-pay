@@ -8,11 +8,11 @@ import BlockTrue from "./blockTrue";
 import BlockElse from "./blockElse";
 export default function Body() {
     const searchParams = useSearchParams();
-    const id = searchParams.get("upiid");
-    const name = searchParams.get("name");
+    const id = "9633605648@fam";
+    const name = "Sabarinath S";
     const money = searchParams.get("money");
-    data.UPI = id || "9633605648@fam";
-    data.NAME = name || "Sabarinath S";
+    data.UPI = id;
+    data.NAME = name;
     if(isNaN(Number(money))){
         data.MONEY = "0";
     }else{
