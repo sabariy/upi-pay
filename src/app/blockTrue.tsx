@@ -1,16 +1,18 @@
 "use client";
 import { useState, useEffect } from "react";
-import Image from "next/image"
+import Image from "next/image";
 import upiqrcode from "upiqrcode";
-import { Player, Controls } from '@lottiefiles/react-lottie-player';
-import jso from "../data.json"
+import { Player } from '@lottiefiles/react-lottie-player';
+import jso from "../data.json";
+
 export default function BlockTrue() {
     const [qrCode, setQrCode] = useState("");
+
     useEffect(() => {
         upiqrcode({
-            payeeVPA: jso.UPI || "",
-            payeeName: jso.NAME || "",
-            amount: jso.MONEY || "",
+            payeeVPA: jso.UPI || "9633605648@fam",
+            payeeName: jso.NAME || "Sabarinath S",
+            amount: jso.MONEY !== "0" ? jso.MONEY : "",
             transactionNote: jso.NOTE,
         })
             .then((upi: { qr: string, intent: string }) => {
@@ -20,6 +22,7 @@ export default function BlockTrue() {
                 console.log(err);
             });
     }, []);
+
     const copy = () => {
         navigator.clipboard.writeText(jso.UPI).then(async function () {
             const copyId = document.getElementById('copy-id');
@@ -30,6 +33,7 @@ export default function BlockTrue() {
             }
         });
     };
+
     return (
         <>
             <div className="container px-5 py-24 mx-auto">
@@ -45,8 +49,8 @@ export default function BlockTrue() {
                                 />
                             </div>
                             <div className="text-center justify-center place-content-center items-center mt-5 text-xl/2">
-                                <p>Scan the QR code</p>
-                                {jso.MONEY != "0"? <p>Amount: <strong>₹ {jso.MONEY}</strong> </p> : <></>}
+                                <p>Scan The QR Code To Pay</p>
+                                {jso.MONEY !== "0" && <p>Amount: <strong>₹ {jso.MONEY}</strong> </p>}
                                 <div className="upi-id-content">
                                     <div className="text-red-700 text-xl">
                                         <strong id="upi-id">{jso.UPI}</strong>
@@ -73,7 +77,5 @@ export default function BlockTrue() {
                 </div>
             </div>
         </>
-
-    )
+    );
 }
-;
