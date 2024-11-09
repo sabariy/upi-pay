@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import data from "../data.json";
+import Image from "next/image";
 import { Player } from '@lottiefiles/react-lottie-player';
 
 export default function BlockFalse() {
